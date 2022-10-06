@@ -21,8 +21,8 @@ jobs:
         with:
           path: .venv
           key: venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
-      - run: poetry install
+      - run: poetry install --no-interaction --no-root
         if: steps.cache-deps.outputs.cache-hit != 'true'
       - run: poetry install --no-interaction
-      - run: poetry run flake8
+      - run: poetry run flake8 src/ tests/
       - run: poetry run pytest
